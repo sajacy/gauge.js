@@ -422,6 +422,7 @@ class BaseDonut extends BaseGauge
 
 	options:
 		lineWidth: 0.10
+		bgLineWidth: 0.10
 		colorStart: "#6f6ea0"
 		colorStop: "#c0c0db"
 		strokeColor: "#eeeeee"
@@ -442,6 +443,7 @@ class BaseDonut extends BaseGauge
 	setOptions: (options=null) ->
 		super(options)
 		@lineWidth = @canvas.height * @options.lineWidth
+		@bgLineWidth = @canvas.height * @options.bgLineWidth
 		@radius = @canvas.height / 2 - @lineWidth/2
 		return @
 
@@ -466,13 +468,14 @@ class BaseDonut extends BaseGauge
 		start = @radius - @lineWidth / 2
 		stop = @radius + @lineWidth / 2
 
+		@ctx.lineWidth = @bgLineWidth || @lineWidth
 		@ctx.strokeStyle = @options.strokeColor
 		@ctx.beginPath()
 		@ctx.arc(w, h, @radius, (1 - @options.angle) * Math.PI, (2 + @options.angle) * Math.PI, false)
-		@ctx.lineWidth = @lineWidth
 		@ctx.lineCap = "round"
 		@ctx.stroke()
 
+		@ctx.lineWidth = @lineWidth
 		@ctx.strokeStyle = grdFill
 		@ctx.beginPath()
 		@ctx.arc(w, h, @radius, (1 - @options.angle) * Math.PI, displayedAngle, false)
@@ -494,8 +497,8 @@ class Donut extends BaseDonut
 		h = @canvas.height / 2
 		start = @radius - @lineWidth / 2
 		stop = @radius + @lineWidth / 2
-		@options._orgStrokeColor = @options.strokeColor
-		@options.strokeColor = @strokeGradient(w, h, start, stop)
+		@ctx.clearRect(0, 0, @canvas.width, @canvas.height)
+		@render()
 		return @
 
 window.AnimationUpdater =
