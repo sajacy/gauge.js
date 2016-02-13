@@ -11,6 +11,27 @@ gauge.js
  * Works in all major browsers
  * MIT License
 
+
+## Development
+
+```
+npm install
+
+gulp
+```
+
+This will transpile and compress for dist.
+
+
+
+## Version History
+
+1.2.2:
+ - Added `bgLineWidth` for Donut
+ - Fixed issue with not re-rendering after `setOptions` on Donut
+ - Added build tool (Gulp)
+ - Removed `.coffee` file from `dist` directory 
+ 
 ## Usage
 
 ```javascript
